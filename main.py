@@ -1,7 +1,7 @@
 from src import get_low_j_stock_list, get_low_j_stock_list_hk
 
 INDEX_CODE = '000510'
-PERIOD = 'weekly'
+PERIOD = 'daily'
 J_THRESHOLD = 0
 
 
