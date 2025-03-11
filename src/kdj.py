@@ -1,4 +1,5 @@
 import random
+import re
 import time
 
 import akshare as ak
@@ -6,11 +7,13 @@ from MyTT import KDJ
 
 
 def get_latest_j_and_price(code, period='daily'):
-    length = len(code)
-    if length == 6:
+    if re.match(r'^\d{6}$', code) is not None:
         stock_data = ak.stock_zh_a_hist(symbol=code, period=period, adjust='qfq')
-    elif length == 5:
+    elif re.match(r'^\d{5}$', code) is not None:
         stock_data = ak.stock_hk_hist(symbol=code, period=period, adjust='qfq')
+    elif re.match(r'^\d{4}\.HK$', code) is not None:
+        processed_code = '0' + code[:-3]
+        stock_data = ak.stock_hk_hist(symbol=processed_code, period=period, adjust='qfq')
     else:
         print('invalid code!')
         return
@@ -31,7 +34,8 @@ def get_low_j_stock_list(index_code, period='daily', j_threshold=0):
         print('fetching j and price finished (', index + 1, '/', rows, ')')
         index_stock.at[index, 'J'] = j
         index_stock.at[index, '收盘价'] = close_price
-    return index_stock[['成分券代码', '成分券名称', '收盘价', 'J']][index_stock['J'] < j_threshold]
+    return index_stock['指数名称'].iloc[0], index_stock[['成分券代码', '成分券名称', '收盘价', 'J']][
+        index_stock['J'] < j_threshold]
 
 
 def get_low_j_stock_list_hk(period='daily', j_threshold=0):
