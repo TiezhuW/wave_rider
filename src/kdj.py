@@ -17,11 +17,12 @@ def get_latest_j_and_price(code, period='daily'):
         stock_data = ak.stock_hk_hist(symbol=processed_code, period=period, adjust='qfq')
     elif re.match(r'^\d{3}\.[A-Z]{1,5}$', code) is not None:
         stock_data = ak.stock_us_hist(symbol=code, period=period, adjust='qfq')
-    elif re.match(r'^[A-Z.]{1,5}$', code) is not None:
+    elif re.match(r'^[A-Z._]{1,5}$', code) is not None:
         if period != 'daily':
             print('period not supported!')
             return
-        tmp_stock_data = ak.stock_us_daily(symbol=code, adjust='qfq')
+        processed_code = code.replace("_", ".")
+        tmp_stock_data = ak.stock_us_daily(symbol=processed_code, adjust='qfq')
         stock_data = tmp_stock_data.rename(columns={'high': '最高', 'low': '最低', 'close': '收盘'})
     else:
         print('invalid code!')
@@ -30,7 +31,6 @@ def get_latest_j_and_price(code, period='daily'):
         KDJ(stock_data['收盘'], stock_data['最高'], stock_data['最低'], 9, 3, 3)
     )
     return stock_data['J'].iloc[-1], stock_data['收盘'].iloc[-1]
-
 
 def get_low_j_stock_list_by_index(index_code, period='daily', j_threshold=0):
     index_stock = ak.index_stock_cons_csindex(symbol=index_code)
