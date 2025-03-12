@@ -37,7 +37,7 @@ def get_low_j_stock_list_by_index(index_code, period='daily', j_threshold=0):
     rows = len(index_stock)
     for index, row in index_stock.iterrows():
         code = row['成分券代码']
-        name = row['股票名称']
+        name = row['成分券名称']
         print('fetching j and price started, code =', code, ', name =', name)
         time.sleep(random.uniform(0.1, 0.5))
         j, close_price = get_latest_j_and_price(code, period)
