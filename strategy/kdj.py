@@ -39,7 +39,7 @@ def get_low_j_stock_list_by_index(index_code, period='daily', j_threshold=0):
         code = row['成分券代码']
         name = row['成分券名称']
         print('fetching j and price started, code =', code, ', name =', name)
-        time.sleep(random.uniform(0.1, 0.5))
+        time.sleep(random.uniform(0.5, 1))
         j, close_price = get_latest_j_and_price(code, period)
         print('fetching j and price finished (', index + 1, '/', rows, '), j =', j, ', close_price =', close_price)
         index_stock.at[index, 'J'] = j
@@ -58,7 +58,7 @@ def get_low_j_stock_list_by_fund(fund_code, period='daily', j_threshold=0):
         code = row['股票代码']
         name = row['股票名称']
         print('fetching j and price started, code =', code, ', name =', name)
-        time.sleep(random.uniform(0.1, 0.5))
+        time.sleep(random.uniform(0.5, 1))
         j, close_price = get_latest_j_and_price(code, period)
         print('fetching j and price finished (', i, '/', rows, '), j =', j, ', close_price =', close_price)
         fund_stock.at[index, 'J'] = j

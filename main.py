@@ -1,4 +1,4 @@
-from src import at_weekend, end_of_month, get_low_j_stock_list_by_fund, get_low_j_stock_list_by_index
+from strategy import at_weekend, end_of_month, get_low_j_stock_list_by_fund, get_low_j_stock_list_by_index
 
 INDEX_CODES = ['000300', '000905', '000688', '930930']
 FUND_CODES = ['018044', '017641']
