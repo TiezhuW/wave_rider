@@ -22,3 +22,19 @@ def end_of_month():
     today = datetime.date.today()
     _, last_day = calendar.monthrange(today.year, today.month)
     return today.day == last_day
+
+
+def get_period_str(period):
+    if period == 'daily':
+        return '日'
+    elif period == 'weekly':
+        return '周'
+    elif period == 'monthly':
+        return '月'
+    else:
+        return ''
+
+
+def get_formated_current_datetime():
+    now = datetime.datetime.now()
+    return now.strftime('%Y-%m-%d %H:%M:%S')
