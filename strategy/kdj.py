@@ -1,32 +1,15 @@
 import random
-import re
 import time
 
 import akshare as ak
 import pandas as pd
 from MyTT import KDJ
 
+from market_data import get_stock_data
+
 
 def get_latest_j_and_price(code, period='daily'):
-    if re.match(r'^\d{6}$', code) is not None:
-        stock_data = ak.stock_zh_a_hist(symbol=code, period=period, adjust='qfq')
-    elif re.match(r'^\d{5}$', code) is not None:
-        stock_data = ak.stock_hk_hist(symbol=code, period=period, adjust='qfq')
-    elif re.match(r'^\d{4}\.HK$', code) is not None:
-        processed_code = '0' + code[:-3]
-        stock_data = ak.stock_hk_hist(symbol=processed_code, period=period, adjust='qfq')
-    elif re.match(r'^\d{3}\.[A-Z]{1,5}$', code) is not None:
-        stock_data = ak.stock_us_hist(symbol=code, period=period, adjust='qfq')
-    elif re.match(r'^[A-Z._]{1,5}$', code) is not None:
-        if period != 'daily':
-            print('period not supported!')
-            return
-        processed_code = code.replace("_", ".")
-        tmp_stock_data = ak.stock_us_daily(symbol=processed_code, adjust='qfq')
-        stock_data = tmp_stock_data.rename(columns={'high': '最高', 'low': '最低', 'close': '收盘'})
-    else:
-        print('invalid code!')
-        return
+    stock_data = get_stock_data(code, period)
     stock_data['K'], stock_data['D'], stock_data['J'] = (
         KDJ(stock_data['收盘'], stock_data['最高'], stock_data['最低'], 9, 3, 3)
     )

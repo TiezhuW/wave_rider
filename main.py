@@ -4,7 +4,7 @@ from strategy import *
 
 INDEX_CODES = ['000300', '000905', '000688', '930930']
 FUND_CODES = ['018044', '017641']
-J_THRESHOLD = 5
+J_THRESHOLD = 0
 
 
 def get_all_low_j_stock_list(period='daily'):
