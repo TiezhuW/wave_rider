@@ -8,6 +8,12 @@ from MyTT import KDJ
 from market_data import get_stock_data
 
 
+def add_kdj_col(stock_data):
+    stock_data['K'], stock_data['D'], stock_data['J'] = (
+        KDJ(stock_data['收盘'], stock_data['最高'], stock_data['最低'], 9, 3, 3)
+    )
+
+
 def get_latest_j_and_price(code, period='daily'):
     stock_data = get_stock_data(code, period)
     stock_data['K'], stock_data['D'], stock_data['J'] = (

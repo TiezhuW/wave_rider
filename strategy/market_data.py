@@ -16,12 +16,12 @@ def get_stock_data(code, period='daily'):
     elif re.match(r'^[A-Z._]{1,5}$', code) is not None:
         if period != 'daily':
             print('period not supported!')
-            return
+            return None
         processed_code = code.replace("_", ".")
         tmp_stock_data = ak.stock_us_daily(symbol=processed_code, adjust='qfq')
         stock_data = tmp_stock_data.rename(columns={'high': '最高', 'low': '最低', 'close': '收盘'})
         stock_data['涨跌幅'] = stock_data['close'] - stock_data['open']
     else:
         print('invalid code!')
-        return
+        return None
     return stock_data
