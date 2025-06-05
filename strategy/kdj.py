@@ -5,7 +5,7 @@ import akshare as ak
 import pandas as pd
 from MyTT import KDJ
 
-from market_data import get_stock_data
+from strategy.market_data import get_stock_data
 
 
 def add_kdj_col(stock_data):
